@@ -17,4 +17,9 @@ object CardUtils {
       case BotPlayer(name, cards, piles) => BotPlayer(name, newCards, piles)
     }
   }
+
+  def standardDeck(): NonemptyDeck = NonemptyDeck((for {
+    num <- 1 to 13
+    suite <- List(Hearts(), Diamonds(), Clubs(), Spades())
+  } yield Card(num, suite)).toList)
 }
