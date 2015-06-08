@@ -33,9 +33,10 @@ trait Player {
     val (optionCard, newDeck) = deck.popTopCard()
     val card = optionCard.getOrElse(Card(1, Hearts())) // TODO: fix sample code
 
-    (addCard(player.cards(player.cards.indexWhere(_.number == rank))), player, newDeck)
+    (addCard(card), player, newDeck)
   }
 
+  val name: String
   val piles: Int
   val cards: Vector[Card]
 
@@ -84,9 +85,6 @@ case class BotPlayer(name: String, cards: Vector[Card], piles: Int) extends Play
   def addCard(card: Card): Player = CardUtils.removeBooks(BotPlayer(name, cards :+ card, piles))
 }
 
-/**
- * Created by darin on 6/8/15.
- */
 object main {
   def main (args: Array[String]): Unit = {
     var player = PersonPlayer("darin", Vector[Card](), 0)
