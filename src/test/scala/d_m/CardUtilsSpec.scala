@@ -9,10 +9,45 @@ class CardUtilsSpec extends FlatSpec with Matchers {
     val newPlayer = CardUtils.removeBooks(player)
 
     newPlayer.cards.length should be (player.cards.length)
-    newPlayer.cards should be (player.cards)
+    newPlayer.cards should be (player.cards.reverse)
+    newPlayer.piles should be (0)
   }
 
-  // TODO: test that removeBooks increments piles
+  it should "remove a book and increase piles by 1" in {
+    val player = PersonPlayer("Sample", Vector(Card(1, Hearts()), Card(1, Spades()),
+      Card(2, Hearts()), Card(1, Diamonds()), Card(2, Diamonds()), Card(1, Clubs())), 0)
+    val newPlayer = CardUtils.removeBooks(player)
+
+    newPlayer.cards.length should be (2)
+    newPlayer.cards.contains(Card(2, Hearts())) should be (true)
+    newPlayer.cards.contains(Card(2, Diamonds())) should be (true)
+    newPlayer.piles should be (1)
+  }
+
+  it should "remove only 4 if there are more than 4 cards of the same number" in {
+    val player = PersonPlayer("Sample", Vector(Card(1, Hearts()), Card(1, Spades()),
+      Card(2, Hearts()), Card(1, Diamonds()), Card(2, Diamonds()), Card(1, Clubs()),
+      Card(1, Spades()), Card(1, Hearts())), 0)
+    val newPlayer = CardUtils.removeBooks(player)
+
+    newPlayer.cards.length should be (4)
+    newPlayer.cards.contains(Card(2, Hearts())) should be (true)
+    newPlayer.cards.contains(Card(2, Diamonds())) should be (true)
+    newPlayer.cards.contains(Card(1, Spades())) should be (true)
+    newPlayer.cards.contains(Card(1, Hearts())) should be (true)
+    newPlayer.piles should be (1)
+  }
+
+  it should "remove everything if there are 8 of the same card" in {
+    val player = PersonPlayer("Sample", Vector(Card(1, Hearts()), Card(1, Spades()),
+      Card(1, Diamonds()), Card(1, Clubs()), Card(1, Hearts()), Card(1, Spades()),
+      Card(1, Diamonds()), Card(1, Clubs())), 0)
+    val newPlayer = CardUtils.removeBooks(player)
+
+
+    newPlayer.cards.isEmpty should be (true)
+    newPlayer.piles should be (2)
+  }
 
   "CardUtilSpec's standardDeck" should "return a standard 52 card deck" in {
     val deck = CardUtils.standardDeck()
