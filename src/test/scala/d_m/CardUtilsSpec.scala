@@ -44,7 +44,6 @@ class CardUtilsSpec extends FlatSpec with Matchers {
       Card(1, Diamonds()), Card(1, Clubs())), 0)
     val newPlayer = CardUtils.removeBooks(player)
 
-
     newPlayer.cards.isEmpty should be (true)
     newPlayer.piles should be (2)
   }
