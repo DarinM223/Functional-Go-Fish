@@ -20,6 +20,5 @@ class NonemptyDeckSpec extends FlatSpec with Matchers {
     }
 
     newDeck.deck.length should be (deck.deck.length)
-    newDeck.deck should not be (deck.deck)
   }
 }

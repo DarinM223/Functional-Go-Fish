@@ -6,7 +6,7 @@ object main {
 
     println(deck.deck.length)
 
-    var player = PersonPlayer("darin", Vector[Card](), 0)
+    var player = PersonPlayer("darin", List[Card](), 0)
     player = player.addCard(Card(1, Hearts())) match {
       case p: PersonPlayer => p
     }
