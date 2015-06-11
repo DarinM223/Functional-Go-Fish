@@ -7,25 +7,28 @@ class Player(val name: String) {
   def cards = _cards
   def piles = _piles
 
-  def query(rank: Int, player: Player, deck: Deck): Deck =
+  /**
+   * Asks another player if they have a certain card
+   * @param rank
+   * @param player
+   * @param deck
+   * @return the new deck and a boolean that is true when the deck runs out (so that the game will end)
+   */
+  def query(rank: Int, player: Player, deck: Deck): (Deck, Boolean) =
     if (player.hasCard(rank)) {
       addCard(player.cards(player.cards.indexWhere(_.number == rank)))
       player.removeCard(rank)
-      deck
+      (deck, false)
     } else {
-      val (optionCard, _deck) = deck.popTopCard()
+      val (optionCard, newDeck) = deck.popTopCard()
 
-      // If deck is empty, create a new deck and get the top card
-      val (card, newDeck) = optionCard match {
-        case Some(card) => (Some(card), _deck)
-        case None => {
-          val newDeck = CardUtils.standardDeck()
-          newDeck.popTopCard()
+      optionCard match {
+        case Some(card) => {
+          addCard(card)
+          (newDeck, false)
         }
+        case None => (newDeck, true)
       }
-
-      addCard(card.getOrElse(Card(1, Hearts())))
-      newDeck
     }
 
   def hasCard(rank: Int): Boolean = _cards.exists(_.number == rank)

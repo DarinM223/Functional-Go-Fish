@@ -65,7 +65,7 @@ class PlayerSpec extends FlatSpec with Matchers {
 
     val deck = CardUtils.standardDeck()
 
-    val newDeck = player.query(7, player2, deck)
+    val (newDeck, isEmpty) = player.query(7, player2, deck)
 
     player.cards should be (List(Card(7, Diamonds()), Card(2, Spades()), Card(1, Hearts()), Card(3, Diamonds())).reverse)
     player2.cards should be (List(Card(4, Clubs()), Card(9, Spades())))
@@ -73,6 +73,8 @@ class PlayerSpec extends FlatSpec with Matchers {
     newDeck match {
       case d: NonemptyDeck => d.deck should be (deck.deck)
     }
+
+    isEmpty should be (false)
   }
 
   it should "draw from deck if other person doesn't have the card" in {
@@ -86,7 +88,7 @@ class PlayerSpec extends FlatSpec with Matchers {
 
     val deck = CardUtils.standardDeck()
 
-    val newDeck = player.query(7, player2, deck)
+    val (newDeck, isEmpty) = player.query(7, player2, deck)
 
     player.cards.length should be (4)
     player.cards.contains(Card(1, Hearts())) should be (true)
@@ -97,9 +99,11 @@ class PlayerSpec extends FlatSpec with Matchers {
     newDeck match {
       case d: NonemptyDeck => d.deck.length should be (51)
     }
+
+    isEmpty should be (false)
   }
 
-  it should "create a new deck if person doesn't have card and deck is empty" in {
+  it should "return false for second parameter if person doesn't have card and deck is empty" in {
     val player = new Player("Sample")
     player.addCard(Card(1, Hearts()))
     player.addCard(Card(2, Spades()))
@@ -110,17 +114,15 @@ class PlayerSpec extends FlatSpec with Matchers {
 
     val deck = EmptyDeck()
 
-    val newDeck = player.query(7, player2, deck)
-    player.cards.length should be (4)
+    val (newDeck, isEmpty) = player.query(7, player2, deck)
+    player.cards.length should be (3)
     player.cards.contains(Card(1, Hearts())) should be (true)
     player.cards.contains(Card(2, Spades())) should be (true)
     player.cards.contains(Card(3, Diamonds())) should be (true)
     player2.cards should be (List(Card(2, Diamonds())))
 
-    newDeck.isInstanceOf[NonemptyDeck] should be (true)
+    newDeck.isInstanceOf[EmptyDeck] should be (true)
 
-    newDeck match {
-      case d: NonemptyDeck => d.deck.length should be (51)
-    }
+    isEmpty should be (true)
   }
 }

@@ -1,8 +1,6 @@
 package d_m
 
 object CardUtils {
-
-
   /**
    * Returns a standard 52 card deck
    * @return a standard 52 card deck
