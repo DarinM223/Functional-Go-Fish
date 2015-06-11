@@ -6,28 +6,20 @@ object main {
 
     println(deck.deck.length)
 
-    var player = PersonPlayer("darin", List[Card](), 0)
-    player = player.addCard(Card(1, Hearts())) match {
-      case p: PersonPlayer => p
-    }
+    val player = new Player("darin")
+    player.addCard(Card(1, Hearts()))
 
     println(player.cards)
 
-    player = player.addCard(Card(1, Hearts())) match {
-      case p: PersonPlayer => p
-    }
+    player.addCard(Card(1, Hearts()))
 
     println(player.cards)
 
-    player = player.addCard(Card(1, Hearts())) match {
-      case p: PersonPlayer => p
-    }
+    player.addCard(Card(1, Hearts()))
 
     println(player.cards)
 
-    player = player.addCard(Card(1, Hearts())) match {
-      case p: PersonPlayer => p
-    }
+    player.addCard(Card(1, Hearts()))
 
     println(player.cards)
   }

@@ -3,8 +3,6 @@ package d_m
 import org.scalatest._
 
 class CardUtilsSpec extends FlatSpec with Matchers {
-
-
   "CardUtilSpec's standardDeck" should "return a standard 52 card deck" in {
     val deck = CardUtils.standardDeck()
     deck.deck.length should be (52)
