@@ -1,7 +1,6 @@
 package d_m
 
 import org.scalatest._
-import org.scalatest.events.TestFailed
 
 class PlayerSpec extends FlatSpec with Matchers {
   "Player's hasCard" should "properly check if a player has a card" in {
