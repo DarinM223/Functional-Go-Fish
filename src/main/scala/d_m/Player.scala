@@ -12,22 +12,22 @@ class Player(val name: String) {
    * @param rank
    * @param player
    * @param deck
-   * @return the new deck and a boolean that is true when the deck runs out (so that the game will end)
+   * @return the new deck, a boolean that is true if the player had the card, and a boolean that is true when the deck runs out (so that the game will end)
    */
-  def query(rank: Int, player: Player, deck: Deck): (Deck, Boolean) =
+  def query(rank: Int, player: Player, deck: Deck): (Deck, Boolean, Boolean) =
     if (player.hasCard(rank)) {
       addCard(player.cards(player.cards.indexWhere(_.number == rank)))
       player.removeCard(rank)
-      (deck, false)
+      (deck, true, false)
     } else {
       val (optionCard, newDeck) = deck.popTopCard()
 
       optionCard match {
         case Some(card) => {
           addCard(card)
-          (newDeck, false)
+          (newDeck, false, false)
         }
-        case None => (newDeck, true)
+        case None => (newDeck, false, true)
       }
     }
 
@@ -47,7 +47,11 @@ class Player(val name: String) {
       case (cards, map) => map.get(card.number) match {
         case Some(num) => num match {
           case num if num < 4 => (card::cards, map)
-          case num if num % 4 == 0 => (cards, map)
+          case num if num % 4 == 0 => {
+            if (!DiscardPile.hasCard(num)) // add card number to discard pile if not already there
+              DiscardPile.addCard(num)
+            (cards, map)
+          }
           case _ => (card::cards, map.updated(card.number, num - 1))
         }
         case None => (card::cards, map)

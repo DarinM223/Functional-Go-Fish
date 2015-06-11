@@ -64,7 +64,7 @@ class PlayerSpec extends FlatSpec with Matchers {
 
     val deck = CardUtils.standardDeck()
 
-    val (newDeck, isEmpty) = player.query(7, player2, deck)
+    val (newDeck, _, isEmpty) = player.query(7, player2, deck)
 
     player.cards should be (List(Card(7, Diamonds()), Card(2, Spades()), Card(1, Hearts()), Card(3, Diamonds())).reverse)
     player2.cards should be (List(Card(4, Clubs()), Card(9, Spades())))
@@ -87,7 +87,7 @@ class PlayerSpec extends FlatSpec with Matchers {
 
     val deck = CardUtils.standardDeck()
 
-    val (newDeck, isEmpty) = player.query(7, player2, deck)
+    val (newDeck, _, isEmpty) = player.query(7, player2, deck)
 
     player.cards.length should be (4)
     player.cards.contains(Card(1, Hearts())) should be (true)
@@ -113,7 +113,7 @@ class PlayerSpec extends FlatSpec with Matchers {
 
     val deck = EmptyDeck()
 
-    val (newDeck, isEmpty) = player.query(7, player2, deck)
+    val (newDeck, _, isEmpty) = player.query(7, player2, deck)
     player.cards.length should be (3)
     player.cards.contains(Card(1, Hearts())) should be (true)
     player.cards.contains(Card(2, Spades())) should be (true)
