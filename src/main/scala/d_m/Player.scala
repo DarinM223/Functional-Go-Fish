@@ -18,8 +18,12 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
    */
   def query(rank: Int, player: Player, deck: Deck, discardPile: Map[Int, Boolean]): Player.QueryResult =
     if (player.hasCard(rank)) {
-      val (newThis, newDiscardPile) = addCard(player.cards.find(_.number == rank).getOrElse(Card(1, Hearts())), discardPile)
-      Player.QueryResult(newThis, player.removeCard(rank), deck, newDiscardPile, true, false)
+      val (newPlayer, removedCards) = player.removeCard(rank)
+      // add removed cards from player 2 into player 1
+      val (newThis, newDiscardPile) = removedCards.foldLeft((this, discardPile))((prev, card) => prev match {
+        case (player, discardPile) => addCard(card, discardPile)
+      })
+      Player.QueryResult(newThis, newPlayer, deck, newDiscardPile, true, false)
     } else {
       val (optionCard, newDeck) = deck.popTopCard()
 
@@ -66,6 +70,11 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
   def hasCard(rank: Int) = cards.exists(_.number == rank)
   def addCard(card: Card, discardPile: Map[Int, Boolean]): (Player, Map[Int, Boolean]) = copy(cards = card::cards).removeBooks(discardPile)
 
-  // TODO: edit removeCard to remove all of same rank and return list of removed cards
-  def removeCard(rank: Int): Player = if (hasCard(rank)) copy(cards = cards.patch(cards.indexWhere(_.number == rank), Nil, 1)) else this
+  def removeCard(rank: Int): (Player, List[Card]) =
+    if (hasCard(rank)) {
+      val (hand, removedCards) = cards.partition(_.number != rank)
+      (copy(cards = hand), removedCards)
+    } else {
+      (this, List())
+    }
 }

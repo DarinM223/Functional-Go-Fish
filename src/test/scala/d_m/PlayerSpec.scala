@@ -35,21 +35,38 @@ class PlayerSpec extends FlatSpec with Matchers {
     newDiscardPile should be (Map[Int, Boolean](4 -> true, 1 -> true))
   }
 
-//
-//  "Player's removeCard" should "properly remove card from hand" in {
-//    val player = new Player("Sample")
-//    player.addCard(Card(1, Hearts()))
-//    player.addCard(Card(2, Spades()))
-//    player.addCard(Card(3, Diamonds()))
-//
-//    player.removeCard(1)
-//    player.cards should be (List(Card(2, Spades()), Card(3, Diamonds())))
-//    player.removeCard(2)
-//    player.cards should be (List(Card(3, Diamonds())))
-//    player.removeCard(3)
-//    player.cards.isEmpty should be (true)
-//  }
-//
+
+  "PersonPlayer's removeCard" should "properly remove card from hand" in {
+    val player = PersonPlayer("Sample", List(Card(1, Hearts()), Card(2, Spades()), Card(3, Diamonds())), 0)
+
+    var tuple = player.removeCard(1)
+    var newPlayer = tuple._1
+    var removedCards = tuple._2
+    newPlayer.cards should be (List(Card(2, Spades()), Card(3, Diamonds())))
+    removedCards.length should be (1)
+
+    tuple = newPlayer.removeCard(2)
+    newPlayer = tuple._1
+    removedCards = tuple._2
+    newPlayer.cards should be (List(Card(3, Diamonds())))
+    removedCards.length should be (1)
+
+    tuple = newPlayer.removeCard(3)
+    newPlayer = tuple._1
+    removedCards = tuple._2
+    newPlayer.cards.isEmpty should be (true)
+    removedCards.length should be (1)
+  }
+
+  it should "remove all cards of the rank" in {
+    val player = PersonPlayer("Sample", List(Card(1, Hearts()), Card(1, Spades()), Card(1, Diamonds())), 0)
+    val (newPlayer, removedCards) = player.removeCard(1)
+    newPlayer.cards.isEmpty should be (true)
+    removedCards.length should be (3)
+    removedCards.contains(Card(1, Hearts())) should be (true)
+    removedCards.contains(Card(1, Spades())) should be (true)
+    removedCards.contains(Card(1, Diamonds())) should be (true)
+  }
 
   "PersonPlayer's query" should "get another player's card if they have a card of same rank" in {
     val player = PersonPlayer("Sample", List(Card(1, Hearts()), Card(2, Spades()), Card(3, Diamonds())), 0)

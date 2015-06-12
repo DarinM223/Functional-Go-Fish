@@ -1,7 +1,5 @@
 package d_m
 
-import scala.util.control.Breaks._
-
 abstract class BotPlayer(override val name: String, override val cards: List[Card], override val piles: Int)
   extends Player(name, cards, piles) with Turnable {
 
