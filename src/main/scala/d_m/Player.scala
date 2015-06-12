@@ -8,19 +8,20 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
    * @param rank
    * @param player
    * @param deck
-   * @return the new player1, the new player2, the new deck, and a boolean that is true when the deck runs out (so that the game will end)
+   * @return the new player1, the new player2, the new deck,
+   * a boolean that is true if the query is successful and a boolean that is true when the deck runs out (so that the game will end)
    */
-  def query(rank: Int, player: Player, deck: Deck): (Player, Player, Deck, Boolean) =
+  def query(rank: Int, player: Player, deck: Deck): (Player, Player, Deck, Boolean, Boolean) =
     if (player.hasCard(rank)) {
-      (addCard(player.cards(player.cards.indexWhere(_.number == rank))), player.removeCard(rank), deck, false)
+      (addCard(player.cards(player.cards.indexWhere(_.number == rank))), player.removeCard(rank), deck, true, false)
     } else {
       val (optionCard, newDeck) = deck.popTopCard()
 
       optionCard match {
         case Some(card) => {
-          (addCard(card), player, newDeck, false)
+          (addCard(card), player, newDeck, false, false)
         }
-        case None => (this, player, newDeck, true)
+        case None => (this, player, newDeck, false, true)
       }
     }
 
@@ -55,7 +56,7 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
   }
 
   def hasCard(rank: Int) = cards.exists(_.number == rank)
-  def addCard(card: Card): Player = copy(cards = card::cards)
+  def addCard(card: Card): Player = copy(cards = card::cards).removeBooks()
   def removeCard(rank: Int): Player =
     if (hasCard(rank))
       copy(cards = cards.patch(cards.indexWhere(_.number == rank), Nil, 1))

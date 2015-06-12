@@ -51,7 +51,10 @@ abstract class BotPlayer(override val name: String, override val cards: List[Car
           }
         })
       }
-      (newPlayer, queryCardNumber, game.query(this.name, queryPlayer, nextPlayer, queryCardNumber))
+
+      val (_, newGame) = game.query(this.name, queryPlayer, nextPlayer, queryCardNumber)
+
+      (newPlayer, queryCardNumber, newGame)
     } else
       (newPlayer, 0, game)
   }

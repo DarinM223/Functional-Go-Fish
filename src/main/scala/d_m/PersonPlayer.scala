@@ -1,5 +1,7 @@
 package d_m
 
+import scala.util.control.Breaks._
+
 case class PersonPlayer(override val name: String, override val cards: List[Card], override val piles: Int)
   extends Player(name, cards, piles) with Turnable {
 
@@ -17,11 +19,32 @@ case class PersonPlayer(override val name: String, override val cards: List[Card
       }
     }
 
-    println("Enter the card you want to query")
-    val cardNumber = scala.io.StdIn.readInt()
+    println("Your cards: " + this.cards.map({ case (card) => card.toString}))
 
-    val playerName = scala.io.StdIn.readLine("Enter the player name you want to query")
+    var cardNumber = 0
+    var playerName = ""
 
-    (this, cardNumber, game.query(this.name, playerName, nextPlayer, cardNumber))
+    breakable {
+        while (cardNumber > 13 || cardNumber < 1 || !game.players.contains(playerName)) {
+          println("Enter the card you want to query")
+          cardNumber = scala.io.StdIn.readInt()
+
+          println("Enter the player name you want to query")
+          playerName = scala.io.StdIn.readLine()
+
+          if (cardNumber > 13 || cardNumber < 1 || !game.players.contains(playerName)) {
+            println("Error")
+          } else {
+            break()
+          }
+      }
+    }
+    val (successful, newGame) = game.query(this.name, playerName, nextPlayer, cardNumber)
+    if (successful) {
+      println("Added card to hand")
+    } else {
+      println("Go fish!")
+    }
+    (this, cardNumber, newGame)
   }
 }
