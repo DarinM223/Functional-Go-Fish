@@ -21,7 +21,7 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
       val (newPlayer, removedCards) = player.removeCard(rank)
       // add removed cards from player 2 into player 1
       val (newThis, newDiscardPile) = removedCards.foldLeft((this, discardPile))((prev, card) => prev match {
-        case (player, discardPile) => addCard(card, discardPile)
+        case (player, discardPile) => player.addCard(card, discardPile)
       })
       Player.QueryResult(newThis, newPlayer, deck, newDiscardPile, true, false)
     } else {

@@ -35,7 +35,7 @@ object main {
       val currPlayer: String = game.currentPlayer
       val nextPlayer: String = circularList.next()
 
-      players.get(currPlayer) match {
+      game.players.get(currPlayer) match {
         case Some(p: PersonPlayer) => {
           val (newCardNumber, newGame) = p.turn(nextPlayer, game)
           cardNumber = newCardNumber

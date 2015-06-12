@@ -15,10 +15,12 @@ case class Game(deck: Deck, discardPile: Map[Int, Boolean], logs: Map[Int, List[
              .query(rank, players.getOrElse(targetName, PersonPlayer("Test", List(), 0)), deck, discardPile) match {
         case Player.QueryResult(newPlayer1, newPlayer2, newDeck, newDiscardPile, successful, ranOut) => {
           val newPlayers = players.updated(newPlayer1.name, newPlayer1).updated(newPlayer2.name, newPlayer2)
-          if (ranOut) { // if the deck ran out, find the winning player and broadcast the winner
-            (successful, copy(players = newPlayers, deck = newDeck, logs = logs.updated(rank, Log(newPlayer1, newPlayer2, successful)::logs.getOrElse(rank, List())), discardPile = newDiscardPile, won = true))
+          val newLogs = logs.updated(rank, Log(newPlayer1, newPlayer2, successful)::logs.getOrElse(rank, List()))
+
+          if (ranOut) { // if the deck ran out, abort
+            (successful, copy(players = newPlayers, deck = newDeck, logs = newLogs, discardPile = newDiscardPile, won = true))
           } else { // otherwise move to next player
-            (successful, copy(players = newPlayers, deck = newDeck, logs = logs.updated(rank, Log(newPlayer1, newPlayer2, successful)::logs.getOrElse(rank, List())),discardPile = newDiscardPile, currentPlayer = this.nextPlayer, nextPlayer = nextPlayer))
+            (successful, copy(players = newPlayers, deck = newDeck, logs = newLogs,discardPile = newDiscardPile, currentPlayer = this.nextPlayer, nextPlayer = nextPlayer))
           }
         }
         case _ => (false, this)
