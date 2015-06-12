@@ -24,6 +24,7 @@ case class Game(deck: Deck, discardPile: Map[Int, Boolean], logs: Map[Int, List[
         case _ => (false, this)
       }
     } else {
+      println("Error: Player supposed to be " + currentPlayer)
       (false, this)
     }
 }

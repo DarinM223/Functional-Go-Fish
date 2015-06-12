@@ -32,7 +32,7 @@ object main {
     var cardNumber: Int = 0
 
     while (!game.won) {
-      val currPlayer: String = circularList.next()
+      val currPlayer: String = game.currentPlayer
       val nextPlayer: String = circularList.next()
 
       players.get(currPlayer) match {
@@ -43,7 +43,7 @@ object main {
         }
         case Some(p: ComputerPlayer) => {
           println("Bot " + p.name + "'s turn")
-          val (newCardNumber, newGame) = p.turn( nextPlayer, game)
+          val (newCardNumber, newGame) = p.turn(nextPlayer, game)
           cardNumber = newCardNumber
           game = newGame
         }

@@ -42,20 +42,19 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
       case None => map + (card.number -> 1)
     })
 
-    var newDiscardPile: Map[Int, Boolean] = discardPile
-
-    val (newCards, _) = cards.foldLeft((List[Card](), map))((tuple, card) => tuple match {
-      case (cards, map) => map.get(card.number) match {
+    val (newCards, _, newDiscardPile) = cards.foldLeft((List[Card](), map, discardPile))((tuple, card) => tuple match {
+      case (cards, map, discardPile) => map.get(card.number) match {
         case Some(num) => num match {
-          case num if num < 4 => (card::cards, map)
+          case num if num < 4 => (card::cards, map, discardPile)
           case num if num % 4 == 0 => {
-            if (!discardPile.getOrElse(num, false)) // add to discard pile if not already
-              newDiscardPile = discardPile + (num -> true)
-            (cards, map)
+            if (discardPile.getOrElse(card.number, false)) // add to discard pile if not already
+              (cards, map, discardPile)
+            else
+              (cards, map, discardPile + (card.number -> true))
           }
-          case _ => (card::cards, map.updated(card.number, num - 1))
+          case _ => (card::cards, map.updated(card.number, num - 1), discardPile)
         }
-        case None => (card::cards, map)
+        case None => (card::cards, map, discardPile)
       }
     })
 
@@ -66,5 +65,7 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
 
   def hasCard(rank: Int) = cards.exists(_.number == rank)
   def addCard(card: Card, discardPile: Map[Int, Boolean]): (Player, Map[Int, Boolean]) = copy(cards = card::cards).removeBooks(discardPile)
+
+  // TODO: edit removeCard to remove all of same rank and return list of removed cards
   def removeCard(rank: Int): Player = if (hasCard(rank)) copy(cards = cards.patch(cards.indexWhere(_.number == rank), Nil, 1)) else this
 }
