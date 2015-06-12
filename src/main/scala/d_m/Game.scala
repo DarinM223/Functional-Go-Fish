@@ -9,15 +9,19 @@ case class Game(deck: Deck, discardPile: Map[Int, Boolean], players: Map[String,
 
   def query(askerName: String, targetName: String, nextPlayer: String, rank: Int): (Boolean, Game) =
     if (currentPlayer == askerName && players.get(targetName).isInstanceOf[Some[String]] && !won) {
-      val (newPlayer1, newPlayer2, newDeck, successful, ranOut) = players.getOrElse(askerName, PersonPlayer("Test", List(), 0))
-        .query(rank, players.getOrElse(targetName, PersonPlayer("Test", List(), 0)), deck)
-
-      val newPlayers = players.updated(newPlayer1.name, newPlayer1).updated(newPlayer2.name, newPlayer2)
-      if (ranOut) { // if the deck ran out, find the winning player and broadcast the winner
-        (successful, copy(players = newPlayers, deck = newDeck, won = true))
-      } else { // otherwise move to next player
-        (successful, copy(players = newPlayers, deck = newDeck, currentPlayer = this.nextPlayer, nextPlayer = nextPlayer))
+      players.getOrElse(askerName, PersonPlayer("Test", List(), 0))
+             .query(rank, players.getOrElse(targetName, PersonPlayer("Test", List(), 0)), deck, discardPile) match {
+        case Player.QueryResult(newPlayer1, newPlayer2, newDeck, newDiscardPile, successful, ranOut) => {
+          val newPlayers = players.updated(newPlayer1.name, newPlayer1).updated(newPlayer2.name, newPlayer2)
+          if (ranOut) { // if the deck ran out, find the winning player and broadcast the winner
+            (successful, copy(players = newPlayers, deck = newDeck, discardPile = newDiscardPile, won = true))
+          } else { // otherwise move to next player
+            (successful, copy(players = newPlayers, deck = newDeck, discardPile = newDiscardPile, currentPlayer = this.nextPlayer, nextPlayer = nextPlayer))
+          }
+        }
+        case _ => (false, this)
       }
-    } else
+    } else {
       (false, this)
+    }
 }

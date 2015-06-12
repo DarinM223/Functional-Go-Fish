@@ -17,8 +17,9 @@ abstract class BotPlayer(override val name: String, override val cards: List[Car
       // add guess card if the card number hasn't already been discarded and guessed player hasn't already been added
       if (!discardPile.getOrElse(card, false) && !playerGuesses.getOrElse(card, List()).contains(player)) {
         copyBotPlayer(playerGuesses = playerGuesses.updated(card, player::playerGuesses.getOrElse(card, List())))
-      } else
+      } else {
         this
+      }
   }
 
   def turn(prevState: GameState, nextPlayer: String, game: Game): (Player, Int, Game) = {
@@ -55,8 +56,9 @@ abstract class BotPlayer(override val name: String, override val cards: List[Car
       val (_, newGame) = game.query(this.name, queryPlayer, nextPlayer, queryCardNumber)
 
       (newPlayer, queryCardNumber, newGame)
-    } else
+    } else {
       (newPlayer, 0, game)
+    }
   }
 }
 
