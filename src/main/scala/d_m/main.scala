@@ -14,8 +14,7 @@ object main {
     }
 
   def main (args: Array[String]): Unit = {
-    val _players = List(PersonPlayer("darin", List(), 0), ComputerPlayer("Bot1", List(), 0, Map[Int, List[Player]]()),
-                       ComputerPlayer("Bot2", List(), 0, Map[Int, List[Player]]()))
+    val _players = List(PersonPlayer("darin", List(), 0), ComputerPlayer("Bot1", List(), 0), ComputerPlayer("Bot2", List(), 0))
     val (players, deck, discardPile) = _players.foldLeft((Map[String, Player](), CardUtils.standardDeck().asInstanceOf[Deck], Map[Int, Boolean]()))((tuple, player) => tuple match {
       case (players, deck, discardPile) => {
         val (newPlayer, newDeck, newDiscardPile) = dealToPlayer(player, deck, discardPile, NUM_DEAL_CARDS)
@@ -25,9 +24,31 @@ object main {
 
     println(discardPile)
 
-    players.foreach({
-      case (name, p: PersonPlayer) => p.turn(NoState(), "Bot2", Game(deck, discardPile, players, p.name, "Bot1", false))
-      case _ => ;
-    })
+    var prevTurn: GameState = NoState()
+
+    val circularList = Iterator.continually(players.map(_._2.name)).flatten
+
+    var game = Game(deck, discardPile, Map[Int, List[Log]](), players, circularList.next(), circularList.next(), false)
+    var cardNumber: Int = 0
+
+    while (!game.won) {
+      val currPlayer: String = circularList.next()
+      val nextPlayer: String = circularList.next()
+
+      players.get(currPlayer) match {
+        case Some(p: PersonPlayer) => {
+          val (newCardNumber, newGame) = p.turn(nextPlayer, game)
+          cardNumber = newCardNumber
+          game = newGame
+        }
+        case Some(p: ComputerPlayer) => {
+          println("Bot " + p.name + "'s turn")
+          val (newCardNumber, newGame) = p.turn( nextPlayer, game)
+          cardNumber = newCardNumber
+          game = newGame
+        }
+        case None => println("Error with player name!")
+      }
+    }
   }
 }

@@ -7,12 +7,12 @@ case class PersonPlayer(override val name: String, override val cards: List[Card
 
   override def copy(name: String, cards: List[Card], piles: Int) = PersonPlayer(name, cards, piles)
 
-  override def turn(prevState: GameState, nextPlayer: String, game: Game): (Player, Int, Game) = {
+  override def turn(nextPlayer: String, game: Game): (Int, Game) = {
     println("It is " + this.name + "'s turn")
     game match {
-      case Game(deck, discardPile, players, currentPlayer, nextPlayer, won) => {
+      case Game(deck, discardPile, logs, players, currentPlayer, nextPlayer, won) => {
         players.foreach({
-          case (_, player) => println("Player " + player.name + " has " + player.cards.count(_ => true) + " and " + player.piles + " piles")
+          case (_, player) => println("Player " + player.name + " has " + player.cards.count(_ => true) + " cards and " + player.piles + " piles")
         })
 
         println("The discard pile contains card with numbers: " + discardPile.map({ case (num, _) => num}))
@@ -25,18 +25,18 @@ case class PersonPlayer(override val name: String, override val cards: List[Card
     var playerName = ""
 
     breakable {
-        while (cardNumber > 13 || cardNumber < 1 || !game.players.contains(playerName)) {
-          println("Enter the card you want to query")
-          cardNumber = scala.io.StdIn.readInt()
+      while (cardNumber > 13 || cardNumber < 1 || !game.players.contains(playerName)) {
+        println("Enter the card you want to query")
+        cardNumber = scala.io.StdIn.readInt()
 
-          println("Enter the player name you want to query")
-          playerName = scala.io.StdIn.readLine()
+        println("Enter the player name you want to query")
+        playerName = scala.io.StdIn.readLine()
 
-          if (cardNumber > 13 || cardNumber < 1 || !game.players.contains(playerName)) {
-            println("Error")
-          } else {
-            break()
-          }
+        if (cardNumber > 13 || cardNumber < 1 || !game.players.contains(playerName)) {
+          println("Error")
+        } else {
+          break()
+        }
       }
     }
     val (successful, newGame) = game.query(this.name, playerName, nextPlayer, cardNumber)
@@ -45,6 +45,6 @@ case class PersonPlayer(override val name: String, override val cards: List[Card
     } else {
       println("Go fish!")
     }
-    (this, cardNumber, newGame)
+    (cardNumber, newGame)
   }
 }
