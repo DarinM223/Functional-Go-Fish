@@ -62,7 +62,7 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
       }
     })
 
-    val addAmount: Int = map.foldLeft(0)((count, keyValue) => count + Math.floorDiv(keyValue._2, 4))
+    val addAmount: Int = map.foldLeft(0)((count, keyValue) => count + Math.floor(keyValue._2.toDouble / 4).toInt)
 
     (copy(cards = newCards, piles = piles + addAmount), newDiscardPile)
   }

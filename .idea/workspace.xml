@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3ae89c75-96a1-442f-ba99-6de40397fddd" name="Default" comment="" />
+    <list default="true" id="3ae89c75-96a1-442f-ba99-6de40397fddd" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/d_m/Player.scala" afterPath="$PROJECT_DIR$/src/main/scala/d_m/Player.scala" />
+    </list>
     <ignored path="Blackjack.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -45,11 +47,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Player.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Player.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/d_m/Player.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.29054055">
+              <caret line="64" column="88" selection-start-line="64" selection-start-column="88" selection-end-line="64" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -85,10 +87,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameSpec.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GameSpec.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/scala/d_m/GameSpec.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.5878378">
+            <state vertical-scroll-proportion="0.0">
               <caret line="47" column="3" selection-start-line="47" selection-start-column="3" selection-end-line="47" selection-end-column="3" />
               <folding />
             </state>
@@ -141,8 +143,8 @@
         <option value="$PROJECT_DIR$/src/main/scala/d_m/BotPlayer.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/d_m/main.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/d_m/Game.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/d_m/Player.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/d_m/GameSpec.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/d_m/Player.scala" />
       </list>
     </option>
   </component>
@@ -1192,18 +1194,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/d_m/Player.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/scala/d_m/GameSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+          <caret line="47" column="3" selection-start-line="47" selection-start-column="3" selection-end-line="47" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/d_m/GameSpec.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/d_m/Player.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5878378">
-          <caret line="47" column="3" selection-start-line="47" selection-start-column="3" selection-end-line="47" selection-end-column="3" />
+        <state vertical-scroll-proportion="0.29054055">
+          <caret line="64" column="88" selection-start-line="64" selection-start-column="88" selection-end-line="64" selection-end-column="88" />
           <folding />
         </state>
       </provider>
