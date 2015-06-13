@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3ae89c75-96a1-442f-ba99-6de40397fddd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/d_m/Player.scala" afterPath="$PROJECT_DIR$/src/main/scala/d_m/Player.scala" />
-    </list>
+    <list default="true" id="3ae89c75-96a1-442f-ba99-6de40397fddd" name="Default" comment="" />
     <ignored path="Blackjack.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -50,7 +48,7 @@
       <file leaf-file-name="Player.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/d_m/Player.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29054055">
+            <state vertical-scroll-proportion="2.162162">
               <caret line="64" column="88" selection-start-line="64" selection-start-column="88" selection-end-line="64" selection-end-column="88" />
               <folding />
             </state>
@@ -1204,7 +1202,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/d_m/Player.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29054055">
+        <state vertical-scroll-proportion="2.162162">
           <caret line="64" column="88" selection-start-line="64" selection-start-column="88" selection-end-line="64" selection-end-column="88" />
           <folding />
         </state>
