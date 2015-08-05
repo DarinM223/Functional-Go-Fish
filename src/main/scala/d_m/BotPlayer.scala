@@ -1,7 +1,11 @@
 package d_m
 
-abstract class BotPlayer(override val name: String, override val cards: List[Card], override val piles: Int)
-  extends Player(name, cards, piles) with Turnable {
+abstract class BotPlayer(
+    override val name: String,
+    override val cards: List[Card],
+    override val piles: Int)
+  extends Player(name, cards, piles)
+  with Turnable {
 
   def turn(nextPlayer: String, game: Game): (Int, Game) = {
     // build map ordered by # of same cards with rank in hand

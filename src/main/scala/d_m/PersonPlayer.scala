@@ -2,20 +2,29 @@ package d_m
 
 import scala.util.control.Breaks._
 
-case class PersonPlayer(override val name: String, override val cards: List[Card], override val piles: Int)
-  extends Player(name, cards, piles) with Turnable {
+case class PersonPlayer(
+    override val name: String,
+    override val cards: List[Card],
+    override val piles: Int)
+  extends Player(name, cards, piles)
+  with Turnable {
 
-  override def copy(name: String, cards: List[Card], piles: Int) = PersonPlayer(name, cards, piles)
+  override def copy(
+      name: String,
+      cards: List[Card],
+      piles: Int) = PersonPlayer(name, cards, piles)
 
   override def turn(nextPlayer: String, game: Game): (Int, Game) = {
     println("It is " + this.name + "'s turn")
     game match {
       case Game(deck, discardPile, logs, players, currentPlayer, nextPlayer, won) => {
         players.foreach({
-          case (_, player) => println("Player " + player.name + " has " + player.cards.count(_ => true) + " cards and " + player.piles + " piles")
+          case (_, player) => println("Player " + player.name + " has " +
+            player.cards.count(_ => true) + " cards and " + player.piles + " piles")
         })
 
-        println("The discard pile contains card with numbers: " + discardPile.map({ case (num, _) => num}))
+        println("The discard pile contains card with numbers: " +
+          discardPile.map({ case (num, _) => num}))
       }
     }
 

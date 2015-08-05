@@ -7,6 +7,6 @@ object CardUtils {
    */
   def standardDeck(): NonemptyDeck = NonemptyDeck((for {
     num <- 1 to 13
-    suite <- List(Hearts(), Diamonds(), Clubs(), Spades())
+    suite <- List(Suite.Hearts, Suite.Diamonds, Suite.Clubs, Suite.Spades)
   } yield Card(num, suite)).toList)
 }

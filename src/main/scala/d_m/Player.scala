@@ -5,6 +5,7 @@ object Player {
 }
 
 abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
+
   def copy(name: String = name, cards: List[Card] = cards, piles: Int = piles): Player
 
   /**
@@ -16,7 +17,12 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
    * @return the new player1, the new player2, the new deck, the new discard pile,
    * a boolean that is true if the query is successful and a boolean that is true when the deck runs out (so that the game will end)
    */
-  def query(rank: Int, player: Player, deck: Deck, discardPile: Map[Int, Boolean]): Player.QueryResult =
+  def query(
+      rank: Int,
+      player: Player,
+      deck: Deck,
+      discardPile: Map[Int, Boolean]): Player.QueryResult =
+
     if (player.hasCard(rank)) {
       val (newPlayer, removedCards) = player.removeCard(rank)
       // add removed cards from player 2 into player 1
@@ -68,7 +74,9 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
   }
 
   def hasCard(rank: Int) = cards.exists(_.number == rank)
-  def addCard(card: Card, discardPile: Map[Int, Boolean]): (Player, Map[Int, Boolean]) = copy(cards = card::cards).removeBooks(discardPile)
+
+  def addCard(card: Card, discardPile: Map[Int, Boolean]): (Player, Map[Int, Boolean]) =
+    copy(cards = card::cards).removeBooks(discardPile)
 
   def removeCard(rank: Int): (Player, List[Card]) =
     if (hasCard(rank)) {

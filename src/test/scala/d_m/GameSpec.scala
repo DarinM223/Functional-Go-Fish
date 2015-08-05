@@ -5,8 +5,8 @@ import org.scalatest._
 class GameSpec extends FlatSpec with Matchers {
   "Game's query" should "update all values and return the next game" in {
     val game = Game(CardUtils.standardDeck(), Map[Int, Boolean](), Map[Int, List[Log]](), Map[String, Player](
-      "test" -> PersonPlayer("test", List(Card(1, Hearts()), Card(2, Spades()), Card(3, Diamonds()), Card(3, Hearts())), 0),
-      "test2" -> PersonPlayer("test2", List(Card(3, Spades()), Card(4, Clubs()), Card(3, Clubs()), Card(8, Hearts())), 0)
+      "test" -> PersonPlayer("test", List(Card(1, Suite.Hearts), Card(2, Suite.Spades), Card(3, Suite.Diamonds), Card(3, Suite.Hearts)), 0),
+      "test2" -> PersonPlayer("test2", List(Card(3, Suite.Spades), Card(4, Suite.Clubs), Card(3, Suite.Clubs), Card(8, Suite.Hearts)), 0)
     ), "test", "test2", false)
 
     game.query("test", "test2", "test", 3) match {
@@ -24,8 +24,8 @@ class GameSpec extends FlatSpec with Matchers {
           case PersonPlayer(_, cards, piles) => {
             println(cards)
             cards.length should be (2)
-            cards.contains(Card(1, Hearts())) should be (true)
-            cards.contains(Card(2, Spades())) should be (true)
+            cards.contains(Card(1, Suite.Hearts)) should be (true)
+            cards.contains(Card(2, Suite.Spades)) should be (true)
 
             piles should be (1)
           }
@@ -33,8 +33,8 @@ class GameSpec extends FlatSpec with Matchers {
         newPlayers("test2") match {
           case PersonPlayer(_, cards, piles) => {
             cards.length should be (2)
-            cards.contains(Card(4, Clubs())) should be (true)
-            cards.contains(Card(8, Hearts())) should be (true)
+            cards.contains(Card(4, Suite.Clubs)) should be (true)
+            cards.contains(Card(8, Suite.Hearts)) should be (true)
 
             piles should be (0)
           }
