@@ -9,10 +9,8 @@ case class PersonPlayer(
   extends Player(name, cards, piles)
   with Turnable {
 
-  override def copy(
-      name: String,
-      cards: List[Card],
-      piles: Int) = PersonPlayer(name, cards, piles)
+  override def copy(name: String, cards: List[Card], piles: Int) =
+    PersonPlayer(name, cards, piles)
 
   override def turn(nextPlayer: String, game: Game): (Int, Game) = {
     println("It is " + this.name + "'s turn")

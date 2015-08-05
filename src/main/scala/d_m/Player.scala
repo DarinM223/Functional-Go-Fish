@@ -1,7 +1,13 @@
 package d_m
 
 object Player {
-  case class QueryResult(player1: Player, player2: Player, deck: Deck, discardPile: Map[Int, Boolean], successful: Boolean, ranOut: Boolean)
+  case class QueryResult(
+      player1: Player,
+      player2: Player,
+      deck: Deck,
+      discardPile: Map[Int, Boolean],
+      successful: Boolean,
+      ranOut: Boolean)
 }
 
 abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
