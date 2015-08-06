@@ -37,8 +37,7 @@ case class Game(
             newDeck,
             newDiscardPile,
             successful,
-            ranOut) => {
-
+            ranOut) =>
           val newPlayers = players.updated(newPlayer1.name, newPlayer1)
                                   .updated(newPlayer2.name, newPlayer2)
 
@@ -64,7 +63,6 @@ case class Game(
             )
             (successful, returnedPlayer)
           }
-        }
         case _ => (false, this)
       }
     } else {

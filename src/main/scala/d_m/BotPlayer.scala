@@ -9,10 +9,12 @@ abstract class BotPlayer(
 
   def turn(nextPlayer: String, game: Game): (Int, Game) = {
     // build map ordered by # of same cards with rank in hand
-    val map = this.cards.foldLeft(Map[Int, Int]())((map, card) => map.get(card.number) match {
-      case Some(num) => map.updated(card.number, num + 1)
-      case None => map + (card.number -> 1)
-    })
+    val map = this.cards.foldLeft(Map[Int, Int]()) { (map, card) =>
+      map.get(card.number) match {
+        case Some(num) => map.updated(card.number, num + 1)
+        case None => map + (card.number -> 1)
+      }
+    }
 
     // sort map based on # of cards of same number in hand
     val askCards = map.toList.sortBy(_._2).reverse

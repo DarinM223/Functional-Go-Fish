@@ -40,10 +40,9 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
       val (optionCard, newDeck) = deck.popTopCard()
 
       optionCard match {
-        case Some(card) => {
+        case Some(card) =>
           val (newPlayer, newDiscardPile) = addCard(card, discardPile)
           Player.QueryResult(newPlayer, player, newDeck, newDiscardPile, false, false)
-        }
         case None => Player.QueryResult(this, player, newDeck, discardPile, false, true)
       }
     }
@@ -62,12 +61,11 @@ abstract class Player(val name: String, val cards: List[Card], val piles: Int) {
       case (cards, map, discardPile) => map.get(card.number) match {
         case Some(num) => num match {
           case num if num < 4 => (card::cards, map, discardPile)
-          case num if num % 4 == 0 => {
+          case num if num % 4 == 0 =>
             if (discardPile.getOrElse(card.number, false)) // add to discard pile if not already
               (cards, map, discardPile)
             else
               (cards, map, discardPile + (card.number -> true))
-          }
           case _ => (card::cards, map.updated(card.number, num - 1), discardPile)
         }
         case None => (card::cards, map, discardPile)

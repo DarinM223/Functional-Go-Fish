@@ -75,24 +75,23 @@ class PlayerSpec extends FlatSpec with Matchers {
     val discardPile = Map[Int, Boolean](10 -> true)
 
     player.query(7, player2, deck, discardPile) match {
-      case Player.QueryResult(player1, player2, deck, discardPile, success, ranOut) => {
-        player1.cards.contains(Card(7, Suite.Diamonds)) should be (true)
-        player1.cards.contains(Card(2, Suite.Spades)) should be (true)
-        player1.cards.contains(Card(1, Suite.Hearts)) should be (true)
-        player1.cards.contains(Card(3, Suite.Diamonds)) should be (true)
+      case Player.QueryResult(player1, player2, deck, discardPile, success, ranOut) =>
+        player1.cards.contains(Card(7, Suite.Diamonds)) should be(true)
+        player1.cards.contains(Card(2, Suite.Spades)) should be(true)
+        player1.cards.contains(Card(1, Suite.Hearts)) should be(true)
+        player1.cards.contains(Card(3, Suite.Diamonds)) should be(true)
 
-        player2.cards.contains(Card(4, Suite.Clubs)) should be (true)
-        player2.cards.contains(Card(9, Suite.Spades)) should be (true)
+        player2.cards.contains(Card(4, Suite.Clubs)) should be(true)
+        player2.cards.contains(Card(9, Suite.Spades)) should be(true)
 
-        discardPile should be (Map[Int, Boolean](10 -> true))
+        discardPile should be(Map[Int, Boolean](10 -> true))
 
         deck match {
-          case d: NonemptyDeck => d.deck should be (deck.deck)
+          case d: NonemptyDeck => d.deck should be(deck.deck)
         }
 
-        success should be (true)
-        ranOut should be (false)
-      }
+        success should be(true)
+        ranOut should be(false)
     }
   }
 
@@ -103,7 +102,7 @@ class PlayerSpec extends FlatSpec with Matchers {
     val discardPile = Map[Int, Boolean](10 -> true)
 
     player.query(7, player2, deck, discardPile) match {
-      case Player.QueryResult(player1, player2, deck, discardPile, success, ranOut) => {
+      case Player.QueryResult(player1, player2, deck, discardPile, success, ranOut) =>
         player1.cards.length should be (4)
         player1.cards.contains(Card(1, Suite.Hearts)) should be (true)
         player1.cards.contains(Card(2, Suite.Spades)) should be (true)
@@ -116,7 +115,6 @@ class PlayerSpec extends FlatSpec with Matchers {
 
         success should be (false)
         ranOut should be (false)
-      }
     }
   }
 
@@ -127,7 +125,7 @@ class PlayerSpec extends FlatSpec with Matchers {
     val discardPile = Map[Int, Boolean](10 -> true)
 
     player.query(7, player2, deck, discardPile) match {
-      case Player.QueryResult(player1, player2, deck, discardPile, success, ranOut) => {
+      case Player.QueryResult(player1, player2, deck, discardPile, success, ranOut) =>
         player1.cards.length should be (3)
         player1.cards.contains(Card(1, Suite.Hearts)) should be (true)
         player1.cards.contains(Card(2, Suite.Spades)) should be (true)
@@ -138,7 +136,6 @@ class PlayerSpec extends FlatSpec with Matchers {
 
         success should be (false)
         ranOut should be (true)
-      }
     }
   }
 }

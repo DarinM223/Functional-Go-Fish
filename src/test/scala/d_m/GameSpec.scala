@@ -21,23 +21,21 @@ class GameSpec extends FlatSpec with Matchers {
 
         newPlayers.count(_ => true) should be (2)
         newPlayers("test") match {
-          case PersonPlayer(_, cards, piles) => {
+          case PersonPlayer(_, cards, piles) =>
             println(cards)
             cards.length should be (2)
             cards.contains(Card(1, Suite.Hearts)) should be (true)
             cards.contains(Card(2, Suite.Spades)) should be (true)
 
             piles should be (1)
-          }
         }
         newPlayers("test2") match {
-          case PersonPlayer(_, cards, piles) => {
+          case PersonPlayer(_, cards, piles) =>
             cards.length should be (2)
             cards.contains(Card(4, Suite.Clubs)) should be (true)
             cards.contains(Card(8, Suite.Hearts)) should be (true)
 
             piles should be (0)
-          }
         }
 
         newDiscardPile should be (Map[Int, Boolean](3 -> true))

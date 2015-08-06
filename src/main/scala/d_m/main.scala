@@ -27,16 +27,17 @@ object main {
       ComputerPlayer("Bot2", List(), 0)
     )
 
-    val (players, deck, discardPile) = _players.foldLeft(
-      (Map[String, Player](),
-      CardUtils.standardDeck().asInstanceOf[Deck],
-      Map[Int, Boolean]()))((tuple, player) => tuple match {
+    val (players, deck, discardPile) = _players.foldLeft((
+        Map[String, Player](),
+        CardUtils.standardDeck().asInstanceOf[Deck],
+        Map[Int, Boolean]())) { (tuple, player) =>
 
-      case (players, deck, discardPile) => {
-        val (newPlayer, newDeck, newDiscardPile) = dealToPlayer(player, deck, discardPile, NUM_DEAL_CARDS)
-        (players + (newPlayer.name -> newPlayer), newDeck, newDiscardPile)
+      tuple match {
+        case (players, deck, discardPile) =>
+          val (newPlayer, newDeck, newDiscardPile) = dealToPlayer(player, deck, discardPile, NUM_DEAL_CARDS)
+          (players + (newPlayer.name -> newPlayer), newDeck, newDiscardPile)
       }
-    })
+    }
 
     println(discardPile)
 
@@ -59,17 +60,15 @@ object main {
       val nextPlayer: String = circularList.next()
 
       game.players.get(currPlayer) match {
-        case Some(p: PersonPlayer) => {
+        case Some(p: PersonPlayer) =>
           val (newCardNumber, newGame) = p.turn(nextPlayer, game)
           cardNumber = newCardNumber
           game = newGame
-        }
-        case Some(p: ComputerPlayer) => {
+        case Some(p: ComputerPlayer) =>
           println("Bot " + p.name + "'s turn")
           val (newCardNumber, newGame) = p.turn(nextPlayer, game)
           cardNumber = newCardNumber
           game = newGame
-        }
         case None => println("Error with player name!")
       }
     }
